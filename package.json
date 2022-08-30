@@ -30,6 +30,7 @@
     "start": "cross-env NODE_ENV=prod node ./dist/index.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^1.35.6",
     "body-parser": "^1.20.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",

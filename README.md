@@ -1,13 +1,17 @@
-# node-ts-express-skeleton
-A skeleton project to quickly spin up microservices in NodeJs using Express with TypeScript
+# Authentication Microservice
 
-## Features:
-- Typescript
-- Express
-- Eslint
-- Prettier
-- Prod/Dev Docker containers
-- Error handling
-- Request Validation
-- Multiple environment files
-- Variety of security measures
+Goal: Provide authentication capabilities for other applications
+
+## Schema
+POST: /v1/projectname/login 
+  body:
+    - username
+    - password
+  response:
+    - sets users JWT in cookie, and responds with it in body
+
+POST: /v1/projectname/logout
+  body:
+    null
+  response:
+    - removes the users JWT from cookie
