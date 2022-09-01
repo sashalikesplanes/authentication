@@ -14,15 +14,18 @@ import { CreateUserRequest } from './validation/create-user-request';
 import RequestValidator from './validation/request-validator';
 import { Logger } from './utils/logger';
 import Config from './utils/config';
+import { supabaseAdmin } from './utils/db';
 
 const app = express();
 
 app.use(helmet());
 app.use(xss());
-app.use(cors({
-  origin: 'http://example.com',
-  optionsSuccessStatus: 200,
-}))
+app.use(
+  cors({
+    origin: 'http://example.com',
+    optionsSuccessStatus: 200,
+  }),
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(Logger.getHttpLoggerInstance());
@@ -41,6 +44,20 @@ app.get('/', async (req, res) => {
     message: 'I am working v3',
   });
 });
+
+app.get(
+  '/signin',
+  asyncWrapper(async (req: Request, res: Response) => {
+    const email = 'sasha@fake.email';
+    const password = '123456';
+    const { user, session, error } = await supabaseAdmin.auth.signIn({ email, password });
+    return res.send({
+      user,
+      session,
+      error,
+    });
+  }),
+);
 
 // Example protected route with Error throwing
 app.get(
